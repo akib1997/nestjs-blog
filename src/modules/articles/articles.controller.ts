@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -22,9 +13,8 @@ export class ArticlesController {
   @Post()
   @ApiCreatedResponse({ type: ArticleEntity })
   async create(@Body() createArticleDto: CreateArticleDto) {
-    return new ArticleEntity(
-      await this.articlesService.create(createArticleDto),
-    );
+    console.log('Post called');
+    return new ArticleEntity(await this.articlesService.create(createArticleDto));
   }
 
   @Get()
@@ -49,13 +39,8 @@ export class ArticlesController {
 
   @Patch(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateArticleDto: UpdateArticleDto,
-  ) {
-    return new ArticleEntity(
-      await this.articlesService.update(id, updateArticleDto),
-    );
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateArticleDto: UpdateArticleDto) {
+    return new ArticleEntity(await this.articlesService.update(id, updateArticleDto));
   }
 
   @Delete(':id')
